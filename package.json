@@ -1,0 +1,10 @@
+{
+  "name": "cinephoria-formulaire",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cinephoria Membership Application form",
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod"
+  }
+}

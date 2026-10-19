@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cinephoria — Membership Application</title>
+<meta name="description" content="Apply for membership at Cinephoria, Club de cinéma at FST Fès.">
+<meta property="og:title" content="Cinephoria — Membership Application">
+<meta property="og:description" content="Join Cinephoria, Club de cinéma at FST Fès.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎟️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Limelight&family=Figtree:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --velvet:#4a0d1a; --velvet-d:#2e0710; --ticket:#f1e6cb; --ink:#241a17;
+  --brass:#d4a64a; --brass-d:#9c7524; --line:#cdbf9f; --err:#a3201f;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; min-height:100vh; font-family:Figtree,system-ui,sans-serif; color:var(--ink);
+  background:
+    repeating-linear-gradient(90deg,rgba(0,0,0,.18) 0 38px,transparent 38px 76px),
+    radial-gradient(ellipse at 50% 0,#6d1427 0,var(--velvet) 45%,var(--velvet-d) 100%);
+  background-attachment:fixed; padding:32px 16px 64px;
+}
+.wrap{max-width:680px;margin:0 auto}
+
+/* Marquee */
+.marquee{
+  position:relative; text-align:center; padding:34px 20px 30px; margin-bottom:28px;
+  background:var(--velvet-d); border:3px solid var(--brass); border-radius:6px;
+  box-shadow:0 0 0 6px var(--velvet-d),0 0 0 8px var(--brass-d);
+}
+.marquee::before,.marquee::after{
+  content:""; position:absolute; left:10px; right:10px; height:8px;
+  background:radial-gradient(circle,#ffe9a8 0 3px,transparent 3.5px) 0 0/22px 8px repeat-x;
+  filter:drop-shadow(0 0 4px #ffcf5a);
+}
+.marquee::before{top:8px} .marquee::after{bottom:8px}
+@media (prefers-reduced-motion:no-preference){
+  .marquee::before{animation:blink 1.6s steps(2,jump-none) infinite}
+  .marquee::after{animation:blink 1.6s steps(2,jump-none) infinite reverse}
+}
+@keyframes blink{50%{opacity:.35}}
+h1{font-family:Limelight,serif;font-weight:400;color:var(--brass);font-size:clamp(2.4rem,9vw,4rem);margin:0;line-height:1.05;text-shadow:0 0 18px rgba(212,166,74,.45)}
+.marquee p{margin:10px 0 0;color:#e9d9b0;font-size:1.02rem}
+.marquee .fac{font-size:.9rem;color:#bfa978;margin-top:4px}
+
+/* Ticket */
+.ticket{
+  background:var(--ticket); border-radius:10px; padding:34px 30px 30px; position:relative;
+  box-shadow:0 18px 40px rgba(0,0,0,.45);
+  -webkit-mask:radial-gradient(circle 11px at 0 120px,#0000 98%,#000) left/51% 100% no-repeat,
+               radial-gradient(circle 11px at 100% 120px,#0000 98%,#000) right/51% 100% no-repeat;
+          mask:radial-gradient(circle 11px at 0 120px,#0000 98%,#000) left/51% 100% no-repeat,
+               radial-gradient(circle 11px at 100% 120px,#0000 98%,#000) right/51% 100% no-repeat;
+}
+.ticket-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding-bottom:22px;margin-bottom:22px;border-bottom:2px dashed var(--line)}
+.ticket-head h2{font-family:Limelight,serif;font-weight:400;font-size:1.5rem;margin:0;color:var(--velvet)}
+.ticket-head span{font-size:.9rem;color:#6b5d4d}
+.ticket-head .rs{color:var(--err)}
+
+.field{margin-bottom:22px;border:0;padding:0}
+label,legend{display:block;font-weight:700;margin-bottom:8px;padding:0}
+.req::after{content:" *";color:var(--err)}
+input[type=text],input[type=tel],input[type=email],textarea{
+  width:100%; font:inherit; color:inherit; background:#fbf6e8; border:1.5px solid var(--line);
+  border-radius:6px; padding:12px 14px; transition:border-color .15s,box-shadow .15s;
+}
+textarea{min-height:110px;resize:vertical}
+input:focus-visible,textarea:focus-visible{outline:none;border-color:var(--velvet);box-shadow:0 0 0 3px rgba(212,166,74,.55)}
+.hint{font-size:.85rem;color:#6b5d4d;margin:-4px 0 8px}
+
+/* chips */
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{position:relative}
+.chip input{position:absolute;opacity:0;inset:0;width:100%;height:100%;cursor:pointer;margin:0}
+.chip span{
+  display:block;padding:9px 16px;border:1.5px solid var(--line);border-radius:999px;background:#fbf6e8;
+  font-weight:500;transition:background .15s,color .15s,border-color .15s;
+}
+.chip input:checked+span{background:var(--velvet);color:var(--ticket);border-color:var(--velvet)}
+.chip input:focus-visible+span{box-shadow:0 0 0 3px rgba(212,166,74,.7)}
+.chip:hover span{border-color:var(--velvet)}
+#otherWrap{margin-top:10px;display:none}
+#otherWrap.on{display:block}
+
+.err{color:var(--err);font-size:.88rem;margin-top:6px;display:none}
+.field.bad .err{display:block}
+.field.bad input[type=text],.field.bad input[type=tel],.field.bad input[type=email],.field.bad textarea{border-color:var(--err)}
+
+button.go{
+  width:100%; font:inherit; font-weight:700; font-size:1.1rem; cursor:pointer;
+  background:var(--velvet); color:var(--brass); border:2px solid var(--brass-d); border-radius:8px;
+  padding:15px; margin-top:6px; transition:background .15s,transform .1s;
+}
+button.go:hover{background:var(--velvet-d)}
+button.go:active{transform:translateY(1px)}
+button.go:focus-visible{outline:3px solid var(--brass);outline-offset:3px}
+button.go:disabled{opacity:.6;cursor:wait}
+.hp{position:absolute;left:-9999px;height:0;overflow:hidden}
+.status{margin-top:14px;font-weight:500;text-align:center;color:var(--err);min-height:1.2em}
+
+/* success */
+.done{display:none;text-align:center;padding:30px 6px 10px}
+.done h3{font-family:Limelight,serif;font-weight:400;font-size:2rem;color:var(--velvet);margin:0 0 10px}
+.done p{margin:6px 0}
+.stub{display:inline-block;margin-top:18px;padding:10px 22px;border:2px dashed var(--brass-d);border-radius:6px;color:var(--brass-d);font-weight:700}
+.sent .ticket-head+form{display:none}
+.sent .done{display:block}
+footer{text-align:center;margin-top:26px;color:#d9c79d;font-size:.92rem}
+footer a{color:var(--brass)}
+@media (max-width:520px){.ticket{padding:28px 18px 24px}.ticket-head{flex-direction:column;gap:4px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="marquee">
+    <h1>Cinephoria</h1>
+    <p>Welcome to Cinephoria, we're glad you're interested in joining us!</p>
+    <p class="fac">Club de cinéma · FST Fès</p>
+  </header>
+
+  <main class="ticket" id="ticket">
+    <div class="ticket-head">
+      <h2>Membership Application</h2>
+      <span><span class="rs">*</span> Required</span>
+    </div>
+
+    <form id="f" novalidate>
+      <div class="hp" aria-hidden="true"><label>Leave empty <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+
+      <div class="field">
+        <label class="req" for="name">Full name</label>
+        <input type="text" id="name" name="name" autocomplete="name" required>
+        <div class="err">Enter your full name.</div>
+      </div>
+
+      <div class="field">
+        <label class="req" for="phone">Phone number</label>
+        <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="+212 6 00 00 00 00" required>
+        <div class="err">Enter a valid phone number.</div>
+      </div>
+
+      <div class="field">
+        <label class="req" for="email">Email</label>
+        <input type="email" id="email" name="email" autocomplete="email" required>
+        <div class="err">Enter a valid email address.</div>
+      </div>
+
+      <div class="field">
+        <label class="req" for="study">Study field</label>
+        <input type="text" id="study" name="study" placeholder="e.g. Génie Informatique, 2nd year" required>
+        <div class="err">Tell us what you study.</div>
+      </div>
+
+      <fieldset class="field" id="genreField">
+        <legend class="req">What's your favorite movie genre?</legend>
+        <div class="chips">
+          <label class="chip"><input type="radio" name="genre" value="Drama"><span>Drama</span></label>
+          <label class="chip"><input type="radio" name="genre" value="Comedie"><span>Comedie</span></label>
+          <label class="chip"><input type="radio" name="genre" value="Romance"><span>Romance</span></label>
+          <label class="chip"><input type="radio" name="genre" value="Sci-fi"><span>Sci-fi</span></label>
+          <label class="chip"><input type="radio" name="genre" value="Horror"><span>Horror</span></label>
+          <label class="chip"><input type="radio" name="genre" value="Mistery"><span>Mistery</span></label>
+          <label class="chip"><input type="radio" name="genre" value="Autre"><span>Autre</span></label>
+        </div>
+        <div id="otherWrap"><input type="text" id="otherGenre" name="genre_other" placeholder="Your genre" aria-label="Other genre"></div>
+        <div class="err">Pick a genre.</div>
+      </fieldset>
+
+      <div class="field">
+        <label class="req" for="film">What is your all-time favorite film?</label>
+        <input type="text" id="film" name="film" required>
+        <div class="err">Name one film.</div>
+      </div>
+
+      <fieldset class="field" id="attField">
+        <legend class="req">Would you be able to attend our activities regularly?</legend>
+        <div class="chips">
+          <label class="chip"><input type="radio" name="attend" value="yes"><span>Yes</span></label>
+          <label class="chip"><input type="radio" name="attend" value="no"><span>No</span></label>
+          <label class="chip"><input type="radio" name="attend" value="it depends"><span>It depends</span></label>
+        </div>
+        <div class="err">Choose an answer.</div>
+      </fieldset>
+
+      <div class="field">
+        <label class="req" for="skills">What skills can you bring to Cinephoria?</label>
+        <p class="hint">Editing, photography, writing, design, organizing events…</p>
+        <textarea id="skills" name="skills" required></textarea>
+        <div class="err">Tell us what you can bring.</div>
+      </div>
+
+      <button class="go" id="btn" type="submit">Send my application</button>
+      <div class="status" id="status" role="alert"></div>
+    </form>
+
+    <div class="done" role="status">
+      <h3>You're in the lineup!</h3>
+      <p>Your application has been sent. We'll contact you soon.</p>
+      <div class="stub">ADMIT ONE · CINEPHORIA</div>
+    </div>
+  </main>
+
+  <footer>
+    Follow us on <a href="https://www.instagram.com/cinephoria_fstf" target="_blank" rel="noopener">Instagram</a>
+  </footer>
+</div>
+
+<script>
+// Configuration:
+// Option 1 (Recommended on Vercel): Add GOOGLE_SCRIPT_URL to your Vercel Project Environment Variables.
+// Option 2: Or paste your Google Apps Script Web App URL below (ends with /exec):
+const SCRIPT_URL = "";
+
+const f = document.getElementById('f'), btn = document.getElementById('btn'), statusEl = document.getElementById('status');
+const otherWrap = document.getElementById('otherWrap'), otherInput = document.getElementById('otherGenre');
+
+f.addEventListener('change', e => {
+  if (e.target.name === 'genre') {
+    const on = e.target.value === 'Autre';
+    otherWrap.classList.toggle('on', on);
+    if (on) otherInput.focus();
+  }
+});
+
+function setBad(el, bad){ el.closest('.field').classList.toggle('bad', bad); }
+
+function validate(){
+  let ok = true, first = null;
+  const check = (el, cond) => { setBad(el, !cond); if(!cond){ ok=false; first = first || el; } };
+  check(f.name, f.name.value.trim().length > 1);
+  check(f.phone, /^[+\d][\d\s().-]{6,}$/.test(f.phone.value.trim()));
+  check(f.email, /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.value.trim()));
+  check(f.study, f.study.value.trim().length > 1);
+  const g = f.querySelector('input[name=genre]:checked');
+  check(document.querySelector('#genreField input'), !!g && (g.value !== 'Autre' || otherInput.value.trim().length > 0));
+  check(f.film, f.film.value.trim().length > 0);
+  check(document.querySelector('#attField input'), !!f.querySelector('input[name=attend]:checked'));
+  check(f.skills, f.skills.value.trim().length > 0);
+  if(first) first.focus();
+  return ok;
+}
+
+f.addEventListener('submit', async e => {
+  e.preventDefault();
+  statusEl.textContent = '';
+  if (f.website.value) return;                // honeypot: bots only
+  if (!validate()) return;
+
+  const g = f.querySelector('input[name=genre]:checked').value;
+  const payload = {
+    name: f.name.value.trim(),
+    phone: f.phone.value.trim(),
+    email: f.email.value.trim(),
+    study: f.study.value.trim(),
+    genre: g === 'Autre' ? 'Autre: ' + otherInput.value.trim() : g,
+    film: f.film.value.trim(),
+    attend: f.querySelector('input[name=attend]:checked').value,
+    skills: f.skills.value.trim()
+  };
+
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+
+  try {
+    if (SCRIPT_URL && SCRIPT_URL.startsWith('http')) {
+      const data = new URLSearchParams(payload);
+      await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: data });
+    } else {
+      const res = await fetch('/api/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const result = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        throw new Error(result.error || 'Could not submit application.');
+      }
+    }
+
+    document.getElementById('ticket').classList.add('sent');
+    window.scrollTo({top:0, behavior:'smooth'});
+  } catch (err) {
+    statusEl.textContent = err.message || 'Could not send. Check your connection and try again.';
+    btn.disabled = false;
+    btn.textContent = 'Send my application';
+  }
+});
+</script>
+</body>
+</html>
