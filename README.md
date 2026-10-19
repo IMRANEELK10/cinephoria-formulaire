@@ -12,15 +12,12 @@ You can deploy this website to Vercel using either the **Vercel Dashboard (GitHu
 
 1. **Push your code to GitHub**:
    ```bash
-   git init
    git add .
-   git commit -m "Initial commit for Cinephoria form"
-   git branch -M main
-   git remote add origin <YOUR_GITHUB_REPO_URL>
-   git push -u origin main
+   git commit -m "Update form"
+   git push
    ```
 2. Go to [vercel.com](https://vercel.com) and click **"Add New Project"**.
-3. Import your GitHub repository.
+3. Import your GitHub repository: `Nouary/cinephoria-formulaire`.
 4. Under **Environment Variables**, add:
    - **Key**: `GOOGLE_SCRIPT_URL`
    - **Value**: Your Google Apps Script Web App URL (`https://script.google.com/macros/s/.../exec`)
